@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sist.ex3_db.mapper.EmpMapper">
+
+    <select id="list" resultType="com.sist.ex3_db.vo.EmpVO">
+        SELECT * FROM emp
+    </select>
+
+    <select id="getEmp" resultType="com.sist.ex3_db.vo.EmpVO" parameterType="String">
+        SELECT * FROM emp
+        WHERE empno = #{a}
+    </select>
+
+<select id="searchEmp" parameterType="map" resultType="com.sist.ex3_db.vo.EmpVO">
+    SELECT *
+    FROM emp
+    <trim prefix="WHERE">
+      <if test="type != null and type == 0">
+        empno LIKE CONCAT('%', #{value}, '%')
+      </if>
+      <if test="type != null and type == 1">
+        ename LIKE CONCAT('%', #{value}, '%')
+      </if>
+      <if test="type != null and type == 2">
+        job LIKE CONCAT('%', #{value}, '%')
+      </if>
+      <if test="type != null and type == 3">
+        deptno = #{value}
+      </if>
+    </trim>
+  </select>
+
+</mapper>
