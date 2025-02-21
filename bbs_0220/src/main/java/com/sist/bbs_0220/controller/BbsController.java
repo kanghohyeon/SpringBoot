@@ -1,6 +1,7 @@
 package com.sist.bbs_0220.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -10,10 +11,13 @@ import com.sist.bbs_0220.vo.BbsVO;
 
 import jakarta.servlet.ServletContext;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.GetMapping;
 
 
-@RestController
+
+@Controller
 public class BbsController {
 
     @Autowired
@@ -60,5 +64,14 @@ public class BbsController {
         mv.setViewName(bname+"/list");
         return mv;
     }
+
+    @GetMapping("write")
+    public String write(@RequestParam String bname, String cPage) {
+        
+
+
+        return bname+"/write";
+    }
+    
     
 }

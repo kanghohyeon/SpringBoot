@@ -132,7 +132,7 @@
                           </td>
 						  <td>
 							<input type="button" value="글쓰기"
-			onclick="javascript:location.href='write'"/>
+			onclick="javascript:location.href='write?bname=BBS&cPage=${nowPage}'"/>
 						  </td>
                       </tr>
                   </tfoot>
