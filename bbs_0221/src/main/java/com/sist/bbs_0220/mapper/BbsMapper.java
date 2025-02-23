@@ -18,4 +18,7 @@ public interface BbsMapper {
     BbsVO get_bbs(String b_idx);
 
     int hit(String b_idx);
+
+    int del(String b_idx, String pwd);
+
 }

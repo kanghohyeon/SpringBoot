@@ -14,6 +14,10 @@ public class BbsService {
     @Autowired
     private BbsMapper bMapper;
 
+    public int delete(String b_idx, String pwd){
+        return bMapper.del(b_idx, pwd);
+    }
+
     //검색 또는 목록기능에서 사용되는 전체게시물 수
     public int getTotalCount(String searchType, String searchValue, String bname){
         return bMapper.totalCount(searchType, searchValue, bname);

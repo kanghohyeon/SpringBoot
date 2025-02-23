@@ -122,6 +122,7 @@
 			<br/><br/>
 			
 			<input type="hidden" name="cPage" value="${cPage }"/>
+			<input type="hidden" name="bname" value="${vo.bname }"/>
 			<input type="hidden" name="b_idx" value="${vo.b_idx }"/>
 			<input type="button" value="삭제" onclick="delBbs(this.form)"/>
 		</form>

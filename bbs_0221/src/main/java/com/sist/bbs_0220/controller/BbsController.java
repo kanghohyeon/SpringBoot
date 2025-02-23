@@ -64,6 +64,18 @@ public class BbsController {
     @Value("${server.bbs_upload.path}")
     private String bbs_upload;
 
+    @PostMapping("del")
+    public ModelAndView postMethodName(String b_idx, String pwd, String bname, String cPage) { // 삭제기능
+        int cnt = bService.delete(b_idx, pwd); // 게시물 기본키와 패스워드를 받아 삭제하자
+        ModelAndView mv =list(bname, null, null, cPage); // 폼에서 넘어온 페이지로 돌아가기 위해 게시판 제목과 cPage를 받아 삭제 후 리스트를 띄우자
+        return mv;  // 앞서 만든 list 함수가 모델앤 뷰를 반환하니 그 함수를 호출해 날로먹자 RestController는 모델앤뷰로 반환해야한다.
+    }
+    
+    public String requestMethodName(@RequestParam String param) {
+        return new String();
+    }
+    
+
     @RequestMapping("list")
     public ModelAndView list(@RequestParam String bname, String searchType,
             String searchValue, String cPage) {

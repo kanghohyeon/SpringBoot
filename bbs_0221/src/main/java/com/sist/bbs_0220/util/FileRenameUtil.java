@@ -38,6 +38,7 @@ public class FileRenameUtil {
             //수정된 파일명을 가지고 다시 File객체를 생성
             f = new File(saveFilePath);
         }
+        System.out.println(fileName);
         return fileName;
     }
 }
