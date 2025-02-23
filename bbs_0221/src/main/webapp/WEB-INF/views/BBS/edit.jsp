@@ -50,32 +50,37 @@
 </head>
 <body>
 	<div id="bbs">
-	<form action="write" method="post" 
+	<form action="update" method="post" 
 	encType="multipart/form-data">
 		<table summary="게시판 글쓰기">
 			<caption>게시판 글쓰기</caption>
 			<tbody>
 				<tr>
 					<th>제목:</th>
-					<td><input type="text" name="subject" id="title" size="45"/></td>
+					<td><input type="text" name="subject" id="title" size="45" value="${subject}"/></td>
 				</tr>
 				<tr>
 					<th>이름:</th>
-					<td><input type="text" name="writer" id="writer" size="12"/></td>
+					<td><input type="text" name="writer" id="write" size="12" value="${writer}"/></td>
 				</tr>
 				<tr>
 					<th>내용:</th>
 					<td><textarea id="content" name="content" cols="50" 
-							rows="8"></textarea></td>
+							rows="8">${content}</textarea></td>
 				</tr>
 				<tr>
 					<th>첨부파일:</th>
-					<td><input type="file" name="file"/></td>
+					<td><input type="file" id="file" name="file" style="display:none" /><p id="invisible">${f_name}  <button type="button" id="viewFile"> 파일 수정하기</button></p></td>
 				</tr>
 
 				<tr>
 					<th>비밀번호:</th>
-					<td><input type="password" name="pwd" size="12"/></td>
+					<td><input type="password" name="pwd" size="12"/>
+						<input type="hidden" name="bname" value="${bname}"/>
+						<input type="hidden" name="file_name" value="${f_name}"/>
+						<input type="hidden" name="b_idx" value="${b_idx}"/>
+						
+					</td>
 				</tr>
 
 				<tr>
@@ -88,7 +93,7 @@
 				</tr>
 			</tbody>
 		</table>
-		<input type="hidden" name="bname" value="BBS"/>
+	
 	</form>
 	</div>
 	<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
@@ -96,6 +101,12 @@
 	<script src="resources/js/lang/summernote-ko-KR.js"></script>
 	<script>
 		$(function(){
+			
+
+			$("#viewFile").on("click", function(){
+			$("input[name='file']").css("display", "block");
+			$("#invisible").css("display","none");
+		});
 			$("#content").summernote({
 				lang:"ko-KR",
 				callbacks:{
@@ -138,9 +149,11 @@
 		function sendData(){
 			
 			let title = $("#title").val();
-			let writer = $("#writer").val();
+			let writer = $("#write").val();
 			let content = $("#content").val();
-			
+		
+
+
 			if(title.trim().length < 1){
 				alert("제목을 입력하세요");
 				$("#title").val("");//청소

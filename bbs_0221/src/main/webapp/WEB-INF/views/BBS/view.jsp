@@ -112,6 +112,9 @@
 		<input type="hidden" name="b_idx" value="${vo.b_idx }"/>
 		<input type="hidden" name="cPage" value="${cPage }"/>
 		<input type="hidden" name="bname" value="${bname }"/>
+		<input type="hidden" name="subject" value="${vo.subject }"/>
+		<input type="hidden" name="writer" value="${vo.writer }"/>
+		<input type="hidden" name="content" value="${vo.content }"/>
 	</form>
 	
 	<%-- 삭제시 보여주는 팝업창 --%>
@@ -158,11 +161,16 @@
 		}
 		
 		function goEdit(){
-			//현재 문서안에 이름이 frm인 폼객체의 action을 Controller로 지정한다.
-			document.frm.action = "edit";
-			document.frm.submit();
-		}
-		
+    // 현재 문서 안에 이름이 frm인 폼객체를 가져옵니다.
+    var frm = document.frm;
+    // 폼의 action을 "edit"으로 지정합니다.
+    frm.action = "edit";
+
+	frm.f_name.value="${vo.file_name}"
+
+    // 폼을 전송합니다.
+    frm.submit();
+}
 		function goDel(){
 			/*
 			if(confirm("정말 삭제하시겠습니까?")){

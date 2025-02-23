@@ -14,6 +14,10 @@ public class BbsService {
     @Autowired
     private BbsMapper bMapper;
 
+    public int edit(BbsVO vo){
+        return bMapper.edit(vo);
+    }
+
     public int delete(String b_idx, String pwd){
         return bMapper.del(b_idx, pwd);
     }

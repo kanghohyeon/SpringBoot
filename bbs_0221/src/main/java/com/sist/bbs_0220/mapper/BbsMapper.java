@@ -21,4 +21,6 @@ public interface BbsMapper {
 
     int del(String b_idx, String pwd);
 
+    int edit(BbsVO vo);
+
 }

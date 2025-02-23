@@ -64,6 +64,62 @@ public class BbsController {
     @Value("${server.bbs_upload.path}")
     private String bbs_upload;
 
+    @PostMapping("update")
+    public ModelAndView postMethodName(BbsVO vo) {
+        ModelAndView mv = new ModelAndView();
+
+        MultipartFile mf = vo.getFile();
+
+        //파일이 첨부되지 않았다고 해도 mf는 null이 아니며 용량이 0이다.
+        if(mf.getSize() > 0){
+            // 파일이 첨부된 상태일 때만 서버에 업로드한다.
+
+            //업로드할 서버의 위치를 절대경로화 시킨다.
+            String realPath = application.getRealPath(bbs_upload);
+
+            String oname = mf.getOriginalFilename();
+
+            // 같은 파일명이 있다면 파일명 변경!
+            String fname = FileRenameUtil.checkSameFilename(oname, realPath);
+
+            try {
+                mf.transferTo(new File(realPath, fname));//업로드
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            // DB에 저장된 파일관련 정보(file_name, ori_name) 지정
+            vo.setFile_name(fname);
+            vo.setOri_name(oname);
+        }
+        vo.setIp(request.getRemoteAddr());//ip지정
+
+        int cnt=bService.edit(vo);
+        System.out.println(cnt+"cnt");
+
+        
+        mv.setViewName("redirect:/list?bname="+vo.getBname());
+
+        return mv;
+    }
+    
+
+    @PostMapping("edit")
+    public ModelAndView edit(String f_name, String b_idx, String cPage, String bname, String subject, String writer, String content) {
+        ModelAndView mv = new ModelAndView(bname+"/edit");
+        mv.addObject("bname", bname);
+        mv.addObject("subject", subject);
+        mv.addObject("f_name", f_name);
+        mv.addObject("b_idx", b_idx);
+        mv.addObject("cPage", cPage);
+        mv.addObject("bname", bname);
+        mv.addObject("writer", writer);
+        mv.addObject("content", content);
+        System.out.println(bname.length());
+        return mv;
+    }
+    
+
     @PostMapping("del")
     public ModelAndView postMethodName(String b_idx, String pwd, String bname, String cPage) { // 삭제기능
         int cnt = bService.delete(b_idx, pwd); // 게시물 기본키와 패스워드를 받아 삭제하자
@@ -188,7 +244,7 @@ public class BbsController {
         int cnt = bService.addBbs(vo);//DB에 저장!!!!!!!!
 
         mv.setViewName("redirect:/list?bname="+vo.getBname());
-
+    
         return mv;
     }
     
